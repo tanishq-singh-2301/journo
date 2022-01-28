@@ -16,7 +16,7 @@ const Calendar: NextPage<{ user: User; token: string }> = ({ token, user }) => {
 
             <main className='h-full w-full mx-auto py-6 px-6 sm:px-10 lg:px-8 overflow-x-scroll'>
                 <div className='h-full w-ful flex justify-center items-center'>
-                    <h1 className='text-2xl font-semibold'>I'm working on this part.</h1>
+                    <h1 className='text-2xl font-semibold'>I&#39;m working on this part.</h1>
                 </div>
             </main>
 
