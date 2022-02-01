@@ -9,7 +9,6 @@ import { useRouter } from 'next/router';
 
 const classNames = (...classes: any): string => classes.filter(Boolean).join(' ');
 
-
 const Header: NextPage<{ user: User; }> = ({ user }) => {
     const Router = useRouter();
     const [navigation, setNavigation] = useState<Array<Navigation>>([

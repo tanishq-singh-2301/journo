@@ -1,16 +1,10 @@
-import axios from 'axios';
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import { NextRouter, useRouter } from 'next/router';
-import Cookies from 'universal-cookie';
 import { User } from '../types/verifyToken';
 import { verifyToken } from '../utils/verifyToken';
 import Header from '../components/header';
 
 const Home: NextPage<{ user: User; token: string }> = ({ user, token }) => {
-  const Router: NextRouter = useRouter();
-  const cookies = new Cookies();
-
   return (
     <div className='h-screen min-h-screen max-w-screen flex justify-start items-center flex-col'>
       <Head>
