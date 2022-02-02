@@ -1,12 +1,13 @@
 import moment, { Moment } from 'moment';
 import type { NextPage } from 'next';
 import { useState } from 'react';
+import { months } from '../../pages/doc/calendar';
 
 const classNames = (...classes: any): string => classes.filter(Boolean).join(' ');
 const n = (n: number): string => n > 9 ? "" + n : "0" + n;
 const dayName = (day: number): string => ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"][day];
 
-const Day: NextPage<{ day: Moment; }> = ({ day }) => {
+const Day: NextPage<{ day: Moment; month: months }> = ({ day, month }) => {
     const [dayHover, setDayHover] = useState<boolean>(false);
 
     return (
@@ -18,7 +19,7 @@ const Day: NextPage<{ day: Moment; }> = ({ day }) => {
             >
                 <div className='w-full mb-5 flex justify-between items-end'>
                     <span className={classNames(
-                        day.month() === moment().month() ? "text-slate-700" : "text-slate-400",
+                        day.month() === month ? "text-slate-700" : "text-slate-400",
                         dayHover ? "text-orange-400" : "",
                         "text-3xl duration-500")}
                     >
@@ -36,7 +37,7 @@ const Day: NextPage<{ day: Moment; }> = ({ day }) => {
 
                 <div
                     className={classNames(
-                        day.month() === moment().month() ? "text-slate-700" : "text-slate-400",
+                        day.month() === month ? "text-slate-700" : "text-slate-400",
                         'w-full mb-5 overflow-hidden truncate whitespace-normal'
                     )}
                 >

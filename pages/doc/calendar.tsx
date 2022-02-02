@@ -13,23 +13,36 @@ type Calendar = {
     days: Array<Moment>;
 }
 
+const monthsArr: Array<string> = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+enum months { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
+
+const getCalendar = (months: months, year: number): Array<Calendar> => {
+    const calendar: Array<Calendar> = [];
+    const today: Moment = moment().set("month", months).set("year", year);
+    const startDay: Moment = today.clone().startOf('month').startOf('week');
+    const endDay: Moment = today.clone().endOf('month').endOf('week');
+    let date: Moment = startDay.clone().subtract(1, 'day');
+
+    while (date.isBefore(endDay, 'day'))
+        calendar.push({ days: Array(7).fill(0).map(() => date.add(1, 'day').clone()) });
+
+    return calendar;
+}
+
 const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => {
-    const [date, setDate] = useState<Date>(new Date());
+    const today: Moment = moment();
+    const [date, setDate] = useState<{ month: months; year: number }>({ month: today.month(), year: today.year() });
     const [calendar, setCalendar] = useState<Array<Calendar> | null>(null);
     const cancelButtonRef = useRef(null);
+    const [adjustDate, setAdjustDate] = useState<boolean>(false);
 
     useEffect(() => {
-        const calendar: Array<Calendar> = [];
-        const today: Moment = moment();
-        const startDay: Moment = today.clone().startOf('month').startOf('week');
-        const endDay: Moment = today.clone().endOf('month').endOf('week');
-        let date: Moment = startDay.clone().subtract(1, 'day');
-
-        while (date.isBefore(endDay, 'day'))
-            calendar.push({ days: Array(7).fill(0).map(() => date.add(1, 'day').clone()) });
-
-        setCalendar(calendar);
+        setCalendar(getCalendar(date.month, date.year));
     }, []);
+
+    useEffect(() => {
+        setCalendar(getCalendar(date.month, date.year));
+    }, [date]);
 
     return (
         <div className='h-screen min-h-screen max-w-screen flex justify-start items-center flex-col'>
@@ -45,24 +58,43 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
 
                     <div className='flex justify-start w-2/6 sm:w-3/6 lg:w-3/6 items-center flex-row'>
                         <span className='text-2xl sm:text-4xl font-bold md:mr-9'>
-                            JAN
+                            {monthsArr[date.month]}
                             <i className='mr-2'>&lsquo;</i>
-                            2022
+                            {date.year}
                         </span>
                         <span className='hidden md:flex duration-300 border-b border-gray-400 pb-2 justify-center items-center font-black'>
-                            <ChevronLeftIcon className="block h-5 w-5 font-black cursor-pointer hover:text-gray-500" aria-hidden="true" />
+                            <ChevronLeftIcon
+                                className="block h-5 w-5 font-black cursor-pointer hover:text-gray-500" aria-hidden="true"
+                                onClick={() => setDate(oldState => {
+                                    return {
+                                        year: (oldState.month - 1) !== -1 ? oldState.year : oldState.year - 1,
+                                        month: (oldState.month - 1) !== -1 ? oldState.month - 1 : 11
+                                    }
+                                })}
+                            />
                             &ensp;&ensp;&bull;&ensp;&ensp;
-                            <ChevronRightIcon className="block h-5 w-5 font-black cursor-pointer hover:text-gray-500" aria-hidden="true" />
+                            <ChevronRightIcon
+                                className="block h-5 w-5 font-black cursor-pointer hover:text-gray-500" aria-hidden="true"
+                                onClick={() => setDate(oldState => {
+                                    return {
+                                        year: (oldState.month + 1) !== 12 ? oldState.year : oldState.year + 1,
+                                        month: (oldState.month + 1) !== 12 ? oldState.month + 1 : 0
+                                    }
+                                })}
+                            />
                         </span>
                     </div>
 
                     <div className='text-gray-800 w-2/6 sm:w-1/6 lg:w-1/6 flex justify-center items-center'>
-                        <span className='flex font-bold justify-center items-center md:border-b duration-200 border-gray-400 w-16 pb-2 cursor-pointer hover:text-slate-600'>
+                        <span
+                            className='flex font-bold justify-center items-center md:border-b duration-200 border-gray-400 w-16 pb-2 cursor-pointer hover:text-slate-600'
+                            onClick={() => setAdjustDate(true)}
+                        >
                             <CalendarIcon className="block h-5 w-5 mr-3" aria-hidden="true" /> :
 
-                            {/* <Transition.Root show={true} as={Fragment}>
-                                <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={() => { }}>
-                                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                            <Transition.Root show={adjustDate} as={Fragment}>
+                                <Dialog as="div" className="absolute top-1/2 left-1/2 z-10" initialFocus={cancelButtonRef} onClose={() => setAdjustDate(false)}>
+                                    <div className="flex items-center justify-center min-h-screen text-center sm:block sm:p-0">
                                         <Transition.Child
                                             as={Fragment}
                                             enter="ease-out duration-300"
@@ -72,14 +104,35 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                                             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                                         >
-                                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl -translate-y-1/2 -translate-x-1/2 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                    <input type="date" name="" id="" />
+                                                    <input
+                                                        type="date"
+                                                        value={moment().set("month", date.month).set("year", date.year).toDate().toISOString().split("T")[0]}
+                                                        onChange={e => {
+                                                            if (e.target.value) {
+                                                                const date: Moment = moment(e.target.value);
+
+                                                                setDate({
+                                                                    year: date.year(),
+                                                                    month: date.month()
+                                                                })
+                                                            }
+                                                        }}
+                                                    />
                                                 </div>
-                                                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:justify-between">
                                                     <button
                                                         type="button"
-                                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                                        onClick={() => setAdjustDate(false)}
+                                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:mx-3 sm:w-auto sm:text-sm"
+                                                    >
+                                                        Done
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setAdjustDate(false)}
+                                                        className="mt-3 w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-2 bg-red-700 text-base font-medium text-slate-50 hover:bg-red-800 hover:text-white sm:mt-0 sm:mx-3 sm:w-auto sm:text-sm"
                                                     >
                                                         Cancel
                                                     </button>
@@ -88,7 +141,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                                         </Transition.Child>
                                     </div>
                                 </Dialog>
-                            </Transition.Root> */}
+                            </Transition.Root>
 
                         </span>
                     </div>
@@ -123,7 +176,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                                 </tr>
                             </thead>
                             <tbody>
-                                {calendar && calendar.map(({ days }, index) => <Week days={days} week={index} key={index} />)}
+                                {calendar && calendar.map(({ days }, index) => <Week days={days} week={index} key={index} month={date.month} />)}
                             </tbody>
                         </table>
                     </div>
@@ -163,3 +216,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
 
 export default Calendar
+export type {
+    months
+}
