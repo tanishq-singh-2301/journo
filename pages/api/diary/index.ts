@@ -24,12 +24,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
     switch (req.method) {
         case "GET":
             try {
-                const startOfTheMonth: Date = new Date(req.headers['start-of-the-month'] as string || moment().startOf('month').toDate());
-                const endOfTheMonth: Date = new Date(req.headers['end-of-the-month'] as string || moment().endOf('month').toDate());
+                const startOfTheMonth: Date = new Date((req.headers['start-of-the-month'] as string).split("T")[0] || moment().startOf('month').toDate());
+                const endOfTheMonth: Date = new Date((req.headers['end-of-the-month'] as string).split("T")[0] || moment().endOf('month').toDate());
 
                 await connectToDB();
                 await DIARY.find({
-                    user: user?._id,
+                    user: user!._id,
                     date: {
                         $gte: startOfTheMonth,
                         $lt: endOfTheMonth

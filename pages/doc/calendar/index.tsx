@@ -1,13 +1,14 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import Header from '../../components/header';
-import { User } from '../../types/verifyToken';
-import { verifyToken } from '../../utils/verifyToken';
+import Header from '../../../components/header';
+import { User } from '../../../types/verifyToken';
+import { verifyToken } from '../../../utils/verifyToken';
 import moment, { Moment } from 'moment';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import Week from '../../components/calendar/week';
+import Week from '../../../components/calendar/week';
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { Dialog, Transition } from '@headlessui/react';
+import { useDiarys } from '../../../context/diary-context';
 
 type Calendar = {
     days: Array<Moment>;
@@ -33,15 +34,27 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
     const today: Moment = moment();
     const [date, setDate] = useState<{ month: months; year: number }>({ month: today.month(), year: today.year() });
     const [calendar, setCalendar] = useState<Array<Calendar> | null>(null);
-    const cancelButtonRef = useRef(null);
     const [adjustDate, setAdjustDate] = useState<boolean>(false);
+    const { getDiarys, diarys } = useDiarys();
 
     useEffect(() => {
         setCalendar(getCalendar(date.month, date.year));
+        (async () => {
+            if (!diarys) {
+                const { success, error } = await getDiarys(token, moment().set("month", date.month).set("year", date.year));
+                if (!success)
+                    alert(error);
+            }
+        })();
     }, []);
 
     useEffect(() => {
         setCalendar(getCalendar(date.month, date.year));
+        (async () => {
+            const { success, error } = await getDiarys(token, moment().set("month", date.month).set("year", date.year));
+            if (!success)
+                alert(error);
+        })();
     }, [date]);
 
     return (
@@ -59,7 +72,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                     <div className='flex justify-start w-2/6 sm:w-3/6 lg:w-3/6 items-center flex-row'>
                         <span className='text-2xl sm:text-4xl font-bold md:mr-9'>
                             {monthsArr[date.month]}
-                            <i className='mr-2'>&lsquo;</i>
+                            <i className='mr-2'>{"'"}</i>
                             {date.year}
                         </span>
                         <span className='hidden md:flex duration-300 border-b border-gray-400 pb-2 justify-center items-center font-black'>
@@ -93,7 +106,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                             <CalendarIcon className="block h-5 w-5 mr-3" aria-hidden="true" /> :
 
                             <Transition.Root show={adjustDate} as={Fragment}>
-                                <Dialog as="div" className="absolute top-1/2 left-1/2 z-10" initialFocus={cancelButtonRef} onClose={() => setAdjustDate(false)}>
+                                <Dialog as="div" className="absolute top-1/2 left-1/2 z-10" onClose={() => setAdjustDate(false)}>
                                     <div className="flex items-center justify-center min-h-screen text-center sm:block sm:p-0">
                                         <Transition.Child
                                             as={Fragment}
@@ -176,7 +189,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                                 </tr>
                             </thead>
                             <tbody>
-                                {calendar && calendar.map(({ days }, index) => <Week days={days} week={index} key={index} month={date.month} />)}
+                                {calendar && calendar.map(({ days }, index) => <Week days={days} key={index} month={date.month} />)}
                             </tbody>
                         </table>
                     </div>

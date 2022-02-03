@@ -7,7 +7,7 @@ const Custom404: NextPage = () => {
 
     useEffect(() => {
         Router.replace('/');
-    }, [])
+    }, []);
 
     return null;
 }

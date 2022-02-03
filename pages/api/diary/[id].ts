@@ -13,7 +13,7 @@ type Response = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
     const { headers, method, query } = req;
-    const token: string = (headers['authorization'] as string || " ").split(' ')[1];
+    const token: string = (headers['authentication'] as string || " ").split(' ')[1];
     const ip: string | string[] = req.headers['x-forwarded-for'] || req.socket.remoteAddress || "-1";
     const { success, user } = verifyToken(token);
 
@@ -24,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
         case "GET":
             try {
                 await connectToDB();
-                await DIARY.findOne({ _id: query.id, user: user?._id })
+                await DIARY.findOne({ _id: query.id, user: user!._id })
                     .then(async (result: Diary) => {
                         await UpdateLastUse(ip, user?._id);
                         return res.status(200).json({ success: true, data: result });
