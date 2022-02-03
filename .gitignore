@@ -40,3 +40,4 @@ yarn-error.log*
 # just for now
 .github/
 vercel.json
+.vercel

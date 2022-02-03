@@ -108,7 +108,7 @@ const Header: NextPage = () => {
                                                         <span className="sr-only">Open user menu</span>
                                                         <img
                                                             className="rounded-full object-cover w-full h-full"
-                                                            src={account.imageUrl.includes('http') ? account.imageUrl : `data:${user!.image.imageType};base64,${account.imageUrl}`}
+                                                            src={account.imageUrl.includes('http') ? account.imageUrl : `data:${user!.image.imageType};base64,${user!.image.base64}`}
                                                         />
                                                     </Menu.Button>
                                                 </div>
