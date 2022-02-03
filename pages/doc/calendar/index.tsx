@@ -64,7 +64,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                 <link rel="icon" href="/journo.png" />
             </Head>
 
-            <Header user={user} />
+            <Header />
 
             <section className="bg-transparent shadow w-full h-min px-5 py-6 sm:px-16 lg:px-14">
                 <div className='w-full flex max-h-16 justify-between items-center'>

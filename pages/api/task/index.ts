@@ -14,7 +14,7 @@ type Response = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
     const { headers, method, body } = req;
-    const token: string = (headers['authorization'] as string || " ").split(' ')[1];
+    const token: string = (headers['authentication'] as string || " ").split(' ')[1];
     const { success, user } = verifyToken(token);
     const ip: string | string[] = req.headers['x-forwarded-for'] || req.socket.remoteAddress || "-1";
 

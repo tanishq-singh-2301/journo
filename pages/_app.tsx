@@ -5,6 +5,7 @@ import { EventsProvider } from '../context/event-context';
 import { DiarysProvider } from '../context/diary-context';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import { UserProvider } from '../context/user-context';
 
 NProgress.configure({
   showSpinner: false,
@@ -20,7 +21,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <EventsProvider>
         <DiarysProvider>
-          <Component {...pageProps} />
+          <UserProvider>
+            <Component {...pageProps} />
+          </UserProvider>
         </DiarysProvider>
       </EventsProvider>
     </>

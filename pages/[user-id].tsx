@@ -1,14 +1,14 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import { User } from '../../types/verifyToken';
-import Header from '../../components/header';
-import { verifyToken } from '../../utils/verifyToken';
+import { User } from '../types/verifyToken';
+import { verifyToken } from '../utils/verifyToken';
+import Header from '../components/header';
 
-const Tasks: NextPage<{ user: User; token: string }> = ({ token, user }) => {
+const Settings: NextPage<{ user: User; token: string }> = ({ user, token }) => {
     return (
         <div className='h-screen min-h-screen max-w-screen flex justify-start items-center flex-col'>
             <Head>
-                <title>Journo | Tasks</title>
+                <title>Journo | Settings</title>
                 <link rel="icon" href="/journo.png" />
             </Head>
 
@@ -16,7 +16,9 @@ const Tasks: NextPage<{ user: User; token: string }> = ({ token, user }) => {
 
             <main className='h-full w-full mx-auto py-6 px-6 sm:px-10 lg:px-8 overflow-x-scroll'>
                 <div className='h-full w-ful flex justify-center items-center'>
-                    <h1 className='text-2xl font-semibold'>Will come at this part a bit later.</h1>
+
+
+
                 </div>
             </main>
 
@@ -50,4 +52,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     }
 }
 
-export default Tasks
+export default Settings

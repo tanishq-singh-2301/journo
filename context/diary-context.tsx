@@ -35,7 +35,7 @@ export const DiarysProvider: NextPage<{ children: ReactNode }> = ({ children }) 
                 method: "GET",
                 url: `${process.env.NEXT_PUBLIC_API}/api/diary`,
                 headers: {
-                    "authorization": `Bearer ${token}`,
+                    "authentication": `Bearer ${token}`,
                     "start-of-the-month": startOfMonth.toISOString(),
                     "end-of-the-month": startOfMonth.add(1, "month").toISOString()
                 }

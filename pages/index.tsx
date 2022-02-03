@@ -12,11 +12,11 @@ const Home: NextPage<{ user: User; token: string }> = ({ user, token }) => {
         <link rel="icon" href="/journo.png" />
       </Head>
 
-      <Header user={user} />
+      <Header />
 
       <main className='h-full w-full mx-auto py-6 px-6 sm:px-10 lg:px-8 overflow-x-scroll'>
         <div className='h-full w-ful flex justify-center items-center'>
-          <h1 className='text-2xl font-semibold'>Hello {user.username}</h1>
+          <h1>{user.username}</h1>
         </div>
       </main>
 

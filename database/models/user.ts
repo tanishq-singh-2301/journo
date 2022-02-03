@@ -1,5 +1,16 @@
 import { model, models, Schema } from "mongoose";
 
+const ImageSchema: Schema = new Schema({
+    base64: {
+        type: String,
+        required: true
+    },
+    imageType: {
+        type: String,
+        required: true
+    }
+})
+
 const UserSchema: Schema = new Schema({
     username: {
         type: String,
@@ -30,7 +41,7 @@ const UserSchema: Schema = new Schema({
         type: String,
         required: false
     },
-    imageUrl: String
+    image: ImageSchema
 });
 
 export default models.Users || model('Users', UserSchema);

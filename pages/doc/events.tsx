@@ -30,7 +30,7 @@ const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
                 <link rel="icon" href="/journo.png" />
             </Head>
 
-            <Header user={user} />
+            <Header />
 
             <section className="bg-transparent shadow w-full h-min">
                 <div className="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8 flex justify-between">

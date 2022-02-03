@@ -14,7 +14,7 @@ const DiaryPage: NextPage<{ user: User; token: string; diary: Diary }> = ({ user
                 <link rel="icon" href="/journo.png" />
             </Head>
 
-            <Header user={user} />
+            <Header />
 
             <main className='h-full w-full mx-auto py-6 px-6 sm:px-10 lg:px-8 overflow-x-scroll'>
                 <div className='h-full w-ful flex justify-center items-center'>

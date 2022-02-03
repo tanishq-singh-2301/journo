@@ -6,11 +6,15 @@ import { NextPage } from 'next';
 import { User } from '../types/verifyToken';
 import { Account, Navigation, UserNavigation } from '../types/components/header';
 import { useRouter } from 'next/router';
+import { UserDP } from '../types/models/user';
+import { useUser } from '../context/user-context';
 
 const classNames = (...classes: any): string => classes.filter(Boolean).join(' ');
 
-const Header: NextPage<{ user: User; }> = ({ user }) => {
+const Header: NextPage = () => {
     const Router = useRouter();
+    const { user, getUser } = useUser();
+
     const [navigation, setNavigation] = useState<Array<Navigation>>([
         { name: 'Dashboard', href: '/', current: false },
         { name: 'Calendar', href: '/doc/calendar', current: false },
@@ -20,14 +24,15 @@ const Header: NextPage<{ user: User; }> = ({ user }) => {
 
     const userNavigation: Array<UserNavigation> = [
         { name: 'Your Profile', href: '#' },
-        { name: 'Settings', href: '#' },
+        { name: 'Settings', href: '/settings' },
         { name: 'Sign out', href: '#' },
     ];
 
     const account: Account = {
-        name: user.username,
-        email: user.email,
-        imageUrl: 'https://picsum.photos/200/200?random=1'
+        name: user ? user!.username : "",
+        email: user ? user!.email : "",
+        // imageUrl: user ? user!.image.base64 : 'https://picsum.photos/200/200?random=1'
+        imageUrl: user ? user!.image.base64 : 'https://images.unsplash.com/photo-1621508638997-e30808c10653?ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80'
     };
 
     useEffect(() => {
@@ -40,7 +45,14 @@ const Header: NextPage<{ user: User; }> = ({ user }) => {
                 setNavigation(updatedNavigation)
             }
         });
-    }, [])
+
+        (async () => {
+            if (!user) {
+                await getUser();
+            }
+        })()
+
+    }, []);
 
     return (
         <>
@@ -92,9 +104,12 @@ const Header: NextPage<{ user: User; }> = ({ user }) => {
                                             {/* Profile dropdown */}
                                             <Menu as="div" className="ml-3 relative">
                                                 <div>
-                                                    <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm border-2 border-slate-200 p-[2px]">
+                                                    <Menu.Button className="h-8 w-8 max-w-xs bg-gray-800 rounded-full flex items-center text-sm border-2 border-slate-200 p-[2px]">
                                                         <span className="sr-only">Open user menu</span>
-                                                        <img className="h-8 w-8 rounded-full" src={account.imageUrl} alt="" />
+                                                        <img
+                                                            className="rounded-full object-cover w-full h-full"
+                                                            src={account.imageUrl.includes('http') ? account.imageUrl : `data:${user!.image.imageType};base64,${account.imageUrl}`}
+                                                        />
                                                     </Menu.Button>
                                                 </div>
                                                 <Transition
@@ -106,21 +121,26 @@ const Header: NextPage<{ user: User; }> = ({ user }) => {
                                                     leaveFrom="transform opacity-100 scale-100"
                                                     leaveTo="transform opacity-0 scale-95"
                                                 >
-                                                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
+                                                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg overflow-hidden bg-white ring-1 ring-black ring-opacity-5">
                                                         {userNavigation.map((item) => (
-                                                            <Menu.Item key={item.name}>
-                                                                {({ active }) => (
-                                                                    <a
-                                                                        href={item.href}
-                                                                        className={classNames(
-                                                                            active ? 'bg-gray-100' : '',
-                                                                            'block px-4 py-2 text-sm text-gray-700'
-                                                                        )}
-                                                                    >
-                                                                        {item.name}
-                                                                    </a>
-                                                                )}
-                                                            </Menu.Item>
+                                                            <Link
+                                                                href={item.href}
+                                                                key={item.name}
+                                                            >
+                                                                <Menu.Item>
+                                                                    {({ active }) => (
+                                                                        <a
+                                                                            href={item.href}
+                                                                            className={classNames(
+                                                                                active ? 'bg-gray-100' : '',
+                                                                                'block px-4 py-2 text-sm text-gray-700'
+                                                                            )}
+                                                                        >
+                                                                            {item.name}
+                                                                        </a>
+                                                                    )}
+                                                                </Menu.Item>
+                                                            </Link>
                                                         ))}
                                                     </Menu.Items>
                                                 </Transition>

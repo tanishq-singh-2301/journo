@@ -10,7 +10,7 @@ type Data = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const { headers, method, body } = req;
-    const token: string = (headers['authorization'] as string || " ").split(' ')[1];
+    const token: string = (headers['authentication'] as string || " ").split(' ')[1];
     const { ip } = body;
     const { success, user } = verifyToken(token);
 

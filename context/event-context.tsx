@@ -49,7 +49,7 @@ export const EventsProvider: NextPage<{ children: ReactNode }> = ({ children }) 
                 method: "GET",
                 url: `${process.env.NEXT_PUBLIC_API}/api/event`,
                 headers: {
-                    "authorization": `Bearer ${token}`,
+                    "authentication": `Bearer ${token}`,
                     "page-number": pageNumber
                 }
             });
@@ -88,7 +88,7 @@ export const EventsProvider: NextPage<{ children: ReactNode }> = ({ children }) 
                     }
                 },
                 headers: {
-                    "authorization": `Bearer ${token}`
+                    "authentication": `Bearer ${token}`
                 }
             });
 
@@ -121,7 +121,7 @@ export const EventsProvider: NextPage<{ children: ReactNode }> = ({ children }) 
                         method: "DELETE",
                         url: `${process.env.NEXT_PUBLIC_API}/api/event`,
                         headers: {
-                            "authorization": `Bearer ${token}`,
+                            "authentication": `Bearer ${token}`,
                             "delete-id": eventId
                         }
                     });
@@ -164,7 +164,7 @@ export const EventsProvider: NextPage<{ children: ReactNode }> = ({ children }) 
                             "updateId": event._id
                         },
                         headers: {
-                            "authorization": `Bearer ${token}`
+                            "authentication": `Bearer ${token}`
                         }
                     });
 
@@ -213,7 +213,7 @@ export const EventsProvider: NextPage<{ children: ReactNode }> = ({ children }) 
                             "updateId": eventId
                         },
                         headers: {
-                            "authorization": `Bearer ${token}`
+                            "authentication": `Bearer ${token}`
                         }
                     });
 
@@ -255,7 +255,7 @@ export const EventsProvider: NextPage<{ children: ReactNode }> = ({ children }) 
                             "updateId": eventId
                         },
                         headers: {
-                            "authorization": `Bearer ${token}`
+                            "authentication": `Bearer ${token}`
                         }
                     });
 
@@ -298,7 +298,7 @@ export const EventsProvider: NextPage<{ children: ReactNode }> = ({ children }) 
                             "updateId": eventId
                         },
                         headers: {
-                            "authorization": `Bearer ${token}`
+                            "authentication": `Bearer ${token}`
                         }
                     });
 
