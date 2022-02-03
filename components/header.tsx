@@ -32,7 +32,7 @@ const Header: NextPage = () => {
         name: user ? user!.username : "",
         email: user ? user!.email : "",
         // imageUrl: user ? user!.image.base64 : 'https://picsum.photos/200/200?random=1'
-        imageUrl: user ? user!.image.base64 : 'https://images.unsplash.com/photo-1621508638997-e30808c10653?ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80'
+        imageUrl: user?.image ? user!.image.base64 : 'https://images.unsplash.com/photo-1621508638997-e30808c10653?ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80'
     };
 
     useEffect(() => {
