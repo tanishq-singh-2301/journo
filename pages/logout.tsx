@@ -1,5 +1,4 @@
 import { GetServerSideProps, NextPage } from "next";
-import { useEffect } from "react";
 import { verifyToken } from "../utils/verifyToken";
 import Cookies from 'universal-cookie';
 import { NextRouter, useRouter } from "next/router";
@@ -8,10 +7,6 @@ import { NextApiRequestCookies } from "next/dist/server/api-utils";
 const Logout: NextPage = () => {
     const cookies: Cookies = new Cookies();
     const Router: NextRouter = useRouter();
-
-    useEffect(() => {
-        logout()
-    }, []);
 
     const logout = (): void => {
         cookies.remove('authentication');

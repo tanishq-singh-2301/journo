@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Header from '../../components/common/header';
 import EventStack from '../../components/event/eventStack';
 import EventUpdate from '../../components/update/event';
+import nProgress from 'nprogress';
 
 const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
     const { events, getEvents, setEvent } = useEvents();
@@ -15,9 +16,13 @@ const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
     useEffect(() => {
         (async () => {
             if (!events) {
+                nProgress.start()
+
                 const { success, error } = await getEvents(token);
                 if (!success)
                     alert(error);
+
+                nProgress.done()
             }
         })();
     }, []);
