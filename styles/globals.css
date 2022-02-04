@@ -9,6 +9,11 @@ body {
   margin: 0;
   background-image: url('/paper_fibers.png');
   font-family: 'Montserrat';
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
 }
 
 .bg_paper_fiber_img {
