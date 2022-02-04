@@ -4,11 +4,11 @@ import Header from '../../../components/header';
 import { User } from '../../../types/verifyToken';
 import { verifyToken } from '../../../utils/verifyToken';
 import moment, { Moment } from 'moment';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Week from '../../../components/calendar/week';
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
-import { Dialog, Transition } from '@headlessui/react';
 import { useDiarys } from '../../../context/diary-context';
+import DatePicker from "react-datepicker";
 
 type Calendar = {
     days: Array<Moment>;
@@ -34,7 +34,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
     const today: Moment = moment();
     const [date, setDate] = useState<{ month: months; year: number }>({ month: today.month(), year: today.year() });
     const [calendar, setCalendar] = useState<Array<Calendar> | null>(null);
-    const [adjustDate, setAdjustDate] = useState<boolean>(false);
+    const dateInputElement = useRef<DatePicker<never, undefined> | null>(null);
     const { getDiarys, diarys } = useDiarys();
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
             <Header />
 
             <section className="bg-transparent shadow w-full h-min px-5 py-6 sm:px-16 lg:px-14">
-                <div className='w-full flex max-h-16 justify-between items-center'>
+                <div className='w-full flex max-h-16 justify-between items-center box-border relative'>
 
                     <div className='flex justify-start w-2/6 sm:w-3/6 lg:w-3/6 items-center flex-row'>
                         <span className='text-2xl sm:text-4xl font-bold md:mr-9'>
@@ -98,65 +98,33 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                         </span>
                     </div>
 
-                    <div className='text-gray-800 w-2/6 sm:w-1/6 lg:w-1/6 flex justify-center items-center'>
+                    <div className='relative text-gray-800 w-2/6 sm:w-1/6 lg:w-1/6 flex justify-center items-center'>
                         <span
-                            className='flex font-bold justify-center items-center md:border-b duration-200 border-gray-400 w-16 pb-2 cursor-pointer hover:text-slate-600'
-                            onClick={() => setAdjustDate(true)}
+                            className='absolute flex font-bold justify-center items-center md:border-b duration-200 border-gray-400 w-16 pb-2 cursor-pointer hover:text-slate-600'
+                            onClick={() => {
+                                dateInputElement.current!.setOpen(true)
+                            }}
                         >
                             <CalendarIcon className="block h-5 w-5 mr-3" aria-hidden="true" /> :
-
-                            <Transition.Root show={adjustDate} as={Fragment}>
-                                <Dialog as="div" className="absolute top-1/2 left-1/2 z-10" onClose={() => setAdjustDate(false)}>
-                                    <div className="flex items-center justify-center min-h-screen text-center sm:block sm:p-0">
-                                        <Transition.Child
-                                            as={Fragment}
-                                            enter="ease-out duration-300"
-                                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                            enterTo="opacity-100 translate-y-0 sm:scale-100"
-                                            leave="ease-in duration-200"
-                                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                        >
-                                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl -translate-y-1/2 -translate-x-1/2 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                                    <input
-                                                        type="date"
-                                                        value={moment().set("month", date.month).set("year", date.year).toDate().toISOString().split("T")[0]}
-                                                        onChange={e => {
-                                                            if (e.target.value) {
-                                                                const date: Moment = moment(e.target.value);
-
-                                                                setDate({
-                                                                    year: date.year(),
-                                                                    month: date.month()
-                                                                })
-                                                            }
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:justify-between">
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setAdjustDate(false)}
-                                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:mx-3 sm:w-auto sm:text-sm"
-                                                    >
-                                                        Done
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setAdjustDate(false)}
-                                                        className="mt-3 w-full inline-flex justify-center rounded-md border shadow-sm px-4 py-2 bg-red-700 text-base font-medium text-slate-50 hover:bg-red-800 hover:text-white sm:mt-0 sm:mx-3 sm:w-auto sm:text-sm"
-                                                    >
-                                                        Cancel
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </Transition.Child>
-                                    </div>
-                                </Dialog>
-                            </Transition.Root>
-
                         </span>
+
+                        <DatePicker
+                            selected={moment().set("month", date.month).set("year", date.year).toDate()}
+                            onChange={e => {
+                                if (e) {
+                                    const date: Moment = moment(e);
+
+                                    setDate({
+                                        year: date.year(),
+                                        month: date.month()
+                                    })
+                                }
+                            }}
+                            dateFormat="MMMM yyyy"
+                            showMonthYearPicker
+                            className='hidden'
+                            ref={e => dateInputElement.current = e}
+                        />
                     </div>
 
                     <div className='w-2/6 lg:w-3/6 flex justify-end items-center'>

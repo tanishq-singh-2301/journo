@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import 'nprogress/nprogress.css';
+import "react-datepicker/dist/react-datepicker.css";
 import type { AppProps } from 'next/app';
 import { EventsProvider } from '../context/event-context';
 import { DiarysProvider } from '../context/diary-context';
