@@ -16,7 +16,7 @@ const Tasks: NextPage<{ user: User; token: string }> = ({ token, user }) => {
     useEffect(() => {
         if (!task) {
             (async () => {
-                nProgress.start()
+                nProgress.start();
 
                 const { success, error } = await getTask();
                 if (!success) {
@@ -42,14 +42,13 @@ const Tasks: NextPage<{ user: User; token: string }> = ({ token, user }) => {
                     <h1 className="text-2xl font-bold text-gray-900">Tasks</h1>
                     <div>
                         <button
-                            className='bg-gray-800 text-white px-4 py-2 rounded-sm text-sm font-medium hover:shadow-lg'
-                            onClick={() => { }}
+                            className='py-[5px] px-[10px] border-2 border-transparent bg-black text-slate-50 font-medium duration-300 hover:border-2 hover:font-semibold hover:border-black hover:text-black hover:bg-transparent'
                         >
                             Create task
                         </button>
                     </div>
                 </div>
-            </section>
+            </section >
 
             <main className='h-max w-full mx-auto py-0 sm:py-4 px-6 sm:px-10 lg:px-8'>
                 <div className='h-full py-1 w-full flex snap-x snap-mandatory items-start justify-start flex-row overflow-x-scroll no-scrollbar'>
@@ -60,7 +59,7 @@ const Tasks: NextPage<{ user: User; token: string }> = ({ token, user }) => {
                 </div>
             </main>
 
-        </div>
+        </div >
     )
 }
 

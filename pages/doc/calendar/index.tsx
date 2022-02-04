@@ -10,7 +10,7 @@ import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/reac
 import { useDiarys } from '../../../context/diary-context';
 import DatePicker from "react-datepicker";
 import { NextApiRequestCookies } from 'next/dist/server/api-utils';
-import NProgress from 'nprogress';
+import nProgress from 'nprogress';
 
 type Calendar = {
     days: Array<Moment>;
@@ -43,13 +43,13 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
         setCalendar(getCalendar(date.month, date.year));
         (async () => {
             if (!diarys) {
-                NProgress.start();
+                nProgress.start();
 
                 const { success, error } = await getDiarys(token, moment().set("month", date.month).set("year", date.year));
                 if (!success)
                     alert(error);
 
-                NProgress.done();
+                nProgress.done();
             }
         })();
     }, []);
@@ -57,13 +57,13 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
     useEffect(() => {
         setCalendar(getCalendar(date.month, date.year));
         (async () => {
-            NProgress.start();
+            nProgress.start();
 
             const { success, error } = await getDiarys(token, moment().set("month", date.month).set("year", date.year));
             if (!success)
                 alert(error);
 
-            NProgress.done();
+            nProgress.done();
         })();
     }, [date]);
 
@@ -150,9 +150,9 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
 
                 <div className="-my-2 w-full overflow-x-auto sm:-mx-6 lg:-mx-8 no-scrollbar snap-both">
                     <div className="align-middle inline-block min-w-full h-full">
-                        <table className="min-w-full h-full w-full">
+                        <table className="min-w-full h-full w-full relative">
                             <thead
-                                className='h-20 relative right-0 z-10 bg_paper_fiber_img'
+                                className='h-20 sticky right-0 z-10'
                             >
                                 <tr>
                                     {

@@ -48,7 +48,6 @@ a {
 
 .custom-scrollbar::-webkit-scrollbar{
   width: 3px;
-  height: 100px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track{

@@ -42,7 +42,7 @@ const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
                     <h1 className="text-2xl font-bold text-gray-900">Events</h1>
                     <div>
                         <button
-                            className='bg-gray-800 text-white px-4 py-2 rounded-sm text-sm font-medium hover:shadow-lg'
+                            className='py-[5px] border-2 border-black px-4 bg-black text-slate-50 font-medium duration-300 hover:border-2 hover:font-semibold hover:border-black hover:text-black hover:bg-slate-50 hover:bg- mr-4'
                             onClick={() => {
                                 setEditEvent({
                                     state: true,
@@ -60,7 +60,7 @@ const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
                         </button>
                         {events &&
                             <button
-                                className='bg-gray-800 text-white px-4 py-2 rounded-sm text-sm font-medium hover:shadow-lg ml-5'
+                                className='py-[5px] border-2 border-black px-4 bg-black text-slate-50 font-medium duration-300 hover:border-2 hover:font-semibold hover:border-black hover:text-black hover:bg-transparent'
                                 onClick={async () => {
                                     const { success, error } = await getEvents(token);
                                     if (!success)

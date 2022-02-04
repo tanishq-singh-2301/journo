@@ -8,6 +8,8 @@ import { Account, Navigation, UserNavigation } from '../../types/components/head
 import { useRouter } from 'next/router';
 import { UserDP } from '../../types/models/user';
 import { useUser } from '../../context/user-context';
+import Image from 'next/image';
+import appImg from '../../public/journo_logo.svg'
 
 const classNames = (...classes: any): string => classes.filter(Boolean).join(' ');
 
@@ -62,11 +64,13 @@ const Header: NextPage = () => {
                             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                                 <div className="flex items-center justify-between h-16">
                                     <div className="flex items-center">
-                                        <div className="flex-shrink-0">
-                                            <img
-                                                className="h-8 w-8"
-                                                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                                                alt="Workflow"
+                                        <div className="relative m-px h-8 w-8 rounded-full overflow-hidden flex justify-center items-center bg-white">
+                                            <Image
+                                                src={appImg}
+                                                alt=''
+                                                className='scale-[1.7] absolute translate-y-0.5'
+                                                height={"100%"}
+                                                width={"100%"}
                                             />
                                         </div>
                                         <div className="hidden md:block">
@@ -146,7 +150,7 @@ const Header: NextPage = () => {
                                     </div>
                                     <div className="-mr-2 flex md:hidden">
                                         {/* Mobile menu button */}
-                                        <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                        <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700">
                                             <span className="sr-only">Open main menu</span>
                                             {open ? (
                                                 <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -184,7 +188,10 @@ const Header: NextPage = () => {
                                 <div className="pt-4 pb-3 border-t border-gray-700">
                                     <div className="flex items-center px-5">
                                         <div className="flex-shrink-0">
-                                            <img className="h-10 w-10 rounded-full" src={account.imageUrl} alt="" />
+                                            <img
+                                                className="h-11 w-11 rounded-full p-[2px] border border-slate-50"
+                                                src={account.imageUrl.includes('http') ? account.imageUrl : `data:${user!.image.imageType};base64,${user!.image.base64}`}
+                                            />
                                         </div>
                                         <div className="ml-3">
                                             <div className="text-base font-medium leading-none text-white">{account.name}</div>
