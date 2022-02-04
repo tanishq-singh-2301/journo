@@ -27,23 +27,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                 await connectToDB();
                 await USER.findOne({ email })
                     .then(async (result) => {
-                        if (await compare(password, result.password)) {
+                        try {
+                            if (await compare(password, result.password)) {
 
-                            await UpdateLastUse(ip, result._id);
-                            const token: string = sign(
-                                {
-                                    _id: result._id,
-                                    email: email,
-                                    username: result.username,
-                                },
-                                process.env.JWT_SECRECT as string,
-                                {
-                                    expiresIn: 60 * 60 * 24 * 2 // 2 days
-                                }
-                            );
+                                await UpdateLastUse(ip, result._id);
+                                const token: string = sign(
+                                    {
+                                        _id: result._id,
+                                        email: email,
+                                        username: result.username,
+                                    },
+                                    process.env.JWT_SECRECT as string,
+                                    {
+                                        expiresIn: 60 * 60 * 24 * 2 // 2 days
+                                    }
+                                );
 
-                            return res.status(200).json({ success: true, token });
-                        } else throw "";
+                                return res.status(200).json({ success: true, token });
+                            } else throw "";
+                        } catch (error) {
+                            res.status(200).json({ success: false, error: "Invalid Credentials" })
+                        }
                     }).catch((error) => res.status(200).json({ success: false, error: error.message.replace(/\"/g, "") }));
             } catch (error) {
                 res.status(200).json({ success: false, error: "Invalid Credentials" })

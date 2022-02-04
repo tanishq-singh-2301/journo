@@ -3,15 +3,10 @@ import { TaskTypes, List } from "../../types/models/task";
 import ListStack from "./listStack";
 
 const dots: Array<string> = ["⭕", "🟠", "🔴", "🟤", "🟣", "🔵", "🟢", "🟡"];
-const classNames = (...classes: Array<string>): string => classes.filter(Boolean).join(' ');
 
 const TaskStack: NextPage<{ lists: Array<List>; task: TaskTypes; }> = ({ lists, task }) => {
     return (
-        <div
-            className={classNames(
-                "max-h-[70vh] overflow-y-auto relative sm:max-w-sm custom-scrollbar min-w-[calc(100vw-48px)] snap-start sm:min-w-[384px] py-0 sm:my-6 mb-4 mr-4 justify-start flex flex-col",
-            )}
-        >
+        <div className="max-h-[70vh] overflow-y-auto relative sm:max-w-sm custom-scrollbar min-w-[calc(100vw-48px)] snap-start sm:min-w-[384px] py-0 sm:my-6 mb-4 mr-4 justify-start flex flex-col" >
 
             <div className="sticky top-0 bg_paper_fiber_img h-fit py-6 w-full sm:px-10 mb-4 flex justify-center items-center flex-col">
                 <div className="h-full w-full flex justify-center items-center flex-col border-b-2 border-gray-700">
@@ -29,8 +24,6 @@ const TaskStack: NextPage<{ lists: Array<List>; task: TaskTypes; }> = ({ lists, 
                     </div>
                 </div>
             </div>
-
-            {/* list */}
 
             {lists.length > 0 ? lists.map((list, index) => <ListStack list={list} key={index} />) : null}
 
