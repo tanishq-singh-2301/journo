@@ -19,7 +19,7 @@ interface List {
     description: string;
     tags: Array<string>;
     _id: string;
-    time: Date
+    date: Date
 }
 
 interface Task {
@@ -31,6 +31,8 @@ interface Task {
     done: Array<List>;
 }
 
+enum TaskTypes { "To_Do", "In_Progress", "On_Hold", "Done" };
+
 export type {
     Task,
     List
@@ -38,5 +40,6 @@ export type {
 
 export {
     ListJoiSchema,
-    TaskJoiSchema
+    TaskJoiSchema,
+    TaskTypes
 }

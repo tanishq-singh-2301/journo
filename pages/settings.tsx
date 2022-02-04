@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { User } from '../types/verifyToken';
 import { verifyToken } from '../utils/verifyToken';
-import Header from '../components/header';
+import Header from '../components/common/header';
 import { useRef, useState } from 'react';
 import Compressor from 'compressorjs';
 import _arrayBufferToBase64 from '../utils/arrayToBuffer';
@@ -27,7 +27,7 @@ const Settings: NextPage<{ user: User; token: string }> = ({ user, token }) => {
     const hiddenFileInput = useRef<HTMLInputElement | null>(null);
 
     return (
-        <div className='h-screen min-h-screen max-w-screen flex justify-start items-center flex-col'>
+        <div className='h-full max-w-screen flex justify-start items-center flex-col'>
             <Head>
                 <title>Journo | Settings</title>
                 <link rel="icon" href="/journo.png" />

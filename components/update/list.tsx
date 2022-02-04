@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { NextPage } from 'next';
 import { List, ListJoiSchema } from '../../types/models/event';
-import Spinner from '../spinner';
+import Spinner from '../common/spinner';
 
 const ListUpdate: NextPage<{
     edit: { state: boolean; todo: Function; };

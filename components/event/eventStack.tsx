@@ -1,14 +1,14 @@
 import { NextPage } from "next";
-import { Event } from "../types/models/event";
-import DropDownMenu from './drop-down-menu';
-import type { Option } from '../types/components/drop-down-menu';
-import Alert from "./alert";
+import { Event } from "../../types/models/event";
+import DropDownMenu from '../common/drop-down-menu';
+import type { Option } from '../../types/components/drop-down-menu';
+import Alert from "../common/alert";
 import { useState } from "react";
-import { useEvents } from "../context/event-context";
-import EventUpdate from "./update/event";
+import { useEvents } from "../../context/event-context";
+import EventUpdate from "../update/event";
 import ListStack from "./listStack";
-import ListUpdate from "./update/list";
-import { ListJoiSchema } from "../types/models/task";
+import ListUpdate from "../update/list";
+import { ListJoiSchema } from "../../types/models/task";
 
 const dots: Array<string> = ["⭕", "🟠", "🔴", "🟤", "🟣", "🔵", "🟢", "🟡"];
 

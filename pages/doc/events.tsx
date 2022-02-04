@@ -4,8 +4,8 @@ import type { User } from '../../types/verifyToken';
 import { verifyToken } from '../../utils/verifyToken';
 import { useEvents } from '../../context/event-context';
 import { useEffect, useState } from 'react';
-import Header from '../../components/header';
-import EventStack from '../../components/eventStack';
+import Header from '../../components/common/header';
+import EventStack from '../../components/event/eventStack';
 import EventUpdate from '../../components/update/event';
 
 const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
@@ -23,7 +23,7 @@ const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
     }, []);
 
     return (
-        <div className='h-screen min-h-screen max-w-screen flex justify-start items-center flex-col'>
+        <div className='h-full max-w-screen flex justify-start items-center flex-col'>
 
             <Head>
                 <title>Journo | Events</title>

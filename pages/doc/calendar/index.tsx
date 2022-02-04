@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import Header from '../../../components/header';
+import Header from '../../../components/common/header';
 import { User } from '../../../types/verifyToken';
 import { verifyToken } from '../../../utils/verifyToken';
 import moment, { Moment } from 'moment';
@@ -68,7 +68,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
     }, [date]);
 
     return (
-        <div className='h-screen min-h-screen max-w-screen flex justify-start items-center flex-col'>
+        <div className='h-full max-w-screen flex justify-start items-center flex-col'>
             <Head>
                 <title>Journo | Calendar</title>
                 <link rel="icon" href="/journo.png" />
@@ -151,7 +151,9 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                 <div className="-my-2 w-full overflow-x-auto sm:-mx-6 lg:-mx-8 no-scrollbar snap-both">
                     <div className="align-middle inline-block min-w-full h-full">
                         <table className="min-w-full h-full w-full">
-                            <thead className='h-20 sticky top-0 z-10 bg_paper_fiber_img'>
+                            <thead
+                                className='h-20 relative right-0 z-10 bg_paper_fiber_img'
+                            >
                                 <tr>
                                     {
                                         ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"].map((value, index) => {

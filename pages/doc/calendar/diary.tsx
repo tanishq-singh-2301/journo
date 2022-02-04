@@ -1,14 +1,14 @@
 import axios from "axios";
 import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Header from "../../../components/header";
+import Header from "../../../components/common/header";
 import { Diary } from "../../../types/models/diary";
 import { User } from "../../../types/verifyToken";
 import { verifyToken } from "../../../utils/verifyToken";
 
 const DiaryPage: NextPage<{ user: User; token: string; diary: Diary }> = ({ user, token, diary }) => {
     return (
-        <div className='h-screen min-h-screen max-w-screen flex justify-start items-center flex-col'>
+        <div className='h-full max-w-screen flex justify-start items-center flex-col'>
             <Head>
                 <title>Journo | Home</title>
                 <link rel="icon" href="/journo.png" />

@@ -1,11 +1,11 @@
 import { NextPage } from "next";
-import { Event, List } from "../types/models/event";
-import type { Option } from '../types/components/drop-down-menu';
+import { Event, List } from "../../types/models/event";
+import type { Option } from '../../types/components/drop-down-menu';
 import { useState } from "react";
-import Alert from "./alert";
-import ListUpdate from "./update/list";
-import DropDownMenu from "./drop-down-menu";
-import { useEvents } from "../context/event-context";
+import Alert from "../common/alert";
+import ListUpdate from "../update/list";
+import DropDownMenu from "../common/drop-down-menu";
+import { useEvents } from "../../context/event-context";
 
 const ListStack: NextPage<{ List: List; eventId: string; index: number; eventName: string }> = ({ List, eventId, index, eventName }) => {
     const [alert, setAlert] = useState<{ state: boolean; todo: Function }>({ state: false, todo: () => { } });

@@ -4,7 +4,7 @@ import { verifyToken } from '../utils/verifyToken';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 import { UserLogin, UserLoginJoiSchema } from '../types/models/user';
-import Spinner from '../components/spinner';
+import Spinner from '../components/common/spinner';
 import axios from 'axios';
 import { NextRouter, useRouter } from 'next/router';
 import Cookies from 'universal-cookie';

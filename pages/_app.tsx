@@ -7,6 +7,7 @@ import { DiarysProvider } from '../context/diary-context';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { UserProvider } from '../context/user-context';
+import { TaskProvider } from '../context/task-context';
 
 NProgress.configure({
   showSpinner: false,
@@ -18,12 +19,25 @@ Router.events.on("routeChangeError", NProgress.done);
 Router.events.on("routeChangeComplete", NProgress.done);
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  const appHeight = (): void => {
+    const doc: HTMLElement = document.documentElement;
+    doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+  }
+
+  if (typeof window !== "undefined") {
+    window.addEventListener('resize', appHeight);
+    appHeight();
+  }
+
   return (
     <>
       <EventsProvider>
         <DiarysProvider>
           <UserProvider>
-            <Component {...pageProps} />
+            <TaskProvider>
+              <Component {...pageProps} />
+            </TaskProvider>
           </UserProvider>
         </DiarysProvider>
       </EventsProvider>

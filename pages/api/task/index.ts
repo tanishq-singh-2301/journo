@@ -9,7 +9,7 @@ import { UpdateLastUse } from '../../../utils/updateLastUse';
 type Response = {
     success: boolean;
     error?: string;
-    data?: Array<Task>
+    data?: Task;
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
@@ -25,9 +25,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
         case "GET":
             try {
                 await connectToDB();
-                await TASK.findOne({ user: user?._id })
-                    .then(async (result: Array<Task>) => {
-                        await UpdateLastUse(ip, user?._id);
+                await TASK.findOne({ user: user!._id })
+                    .then(async (result: Task) => {
+                        await UpdateLastUse(ip, user!._id);
                         return res.status(200).json({ success: true, data: result });
                     }).catch((error) => res.status(200).json({ success: false, error: error.message.replace(/\"/g, "") }));
 

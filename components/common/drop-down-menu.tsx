@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { NextPage } from "next";
-import type { PageData } from '../types/components/drop-down-menu';
+import type { PageData } from '../../types/components/drop-down-menu';
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')

@@ -3,17 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --app-height: 100%;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   background-image: url('/paper_fibers.png');
   font-family: 'Montserrat';
-  min-height: -webkit-fill-available;
-}
-
-html {
-  height: -webkit-fill-available;
+  /* min-height: -webkit-fill-available; */
+  height: 100vh;
+  height: var(--app-height);
 }
 
 .bg_paper_fiber_img {
@@ -36,4 +38,24 @@ a {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.custom-scrollbar {
+  scrollbar-color: black;
+  scrollbar-width: 3px;
+  scrollbar-base-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar{
+  width: 3px;
+  height: 100px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track{
+  background: transparent;
+  margin-block-start: 120px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb{
+  background: rgba(12, 12, 12, 0.281);
 }

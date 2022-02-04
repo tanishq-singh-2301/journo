@@ -3,11 +3,11 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { NextPage } from 'next';
-import { User } from '../types/verifyToken';
-import { Account, Navigation, UserNavigation } from '../types/components/header';
+import { User } from '../../types/verifyToken';
+import { Account, Navigation, UserNavigation } from '../../types/components/header';
 import { useRouter } from 'next/router';
-import { UserDP } from '../types/models/user';
-import { useUser } from '../context/user-context';
+import { UserDP } from '../../types/models/user';
+import { useUser } from '../../context/user-context';
 
 const classNames = (...classes: any): string => classes.filter(Boolean).join(' ');
 
@@ -161,18 +161,24 @@ const Header: NextPage = () => {
                             <Disclosure.Panel className="md:hidden">
                                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                                     {navigation.map((item) => (
-                                        <Disclosure.Button
+                                        <Disclosure.Panel
                                             key={item.name}
-                                            as="a"
-                                            href={item.href}
-                                            className={classNames(
-                                                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                'block px-3 py-2 rounded-md text-base font-medium'
-                                            )}
-                                            aria-current={item.current ? 'page' : undefined}
                                         >
-                                            {item.name}
-                                        </Disclosure.Button>
+                                            <Link
+                                                href={item.href}
+                                                key={item.name}
+                                            >
+                                                <a
+                                                    href={item.href}
+                                                    className={classNames(
+                                                        item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                        'block px-3 py-2 rounded-md text-base font-medium'
+                                                    )}
+                                                >
+                                                    {item.name}
+                                                </a>
+                                            </Link>
+                                        </Disclosure.Panel>
                                     ))}
                                 </div>
                                 <div className="pt-4 pb-3 border-t border-gray-700">
@@ -194,14 +200,21 @@ const Header: NextPage = () => {
                                     </div>
                                     <div className="mt-3 px-2 space-y-1">
                                         {userNavigation.map((item) => (
-                                            <Disclosure.Button
+                                            <Disclosure.Panel
                                                 key={item.name}
-                                                as="a"
-                                                href={item.href}
-                                                className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
                                             >
-                                                {item.name}
-                                            </Disclosure.Button>
+                                                <Link
+                                                    href={item.href}
+                                                >
+                                                    <a
+                                                        href={item.href}
+                                                        className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+
+                                                    >
+                                                        {item.name}
+                                                    </a>
+                                                </Link>
+                                            </Disclosure.Panel>
                                         ))}
                                     </div>
                                 </div>
