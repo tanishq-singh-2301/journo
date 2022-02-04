@@ -16,7 +16,7 @@ const Day: NextPage<{ day: Moment; month: months }> = ({ day, month }) => {
     const Router: NextRouter = useRouter();
 
     return (
-        <td className="h-72 px-5 py-3 whitespace-nowrap">
+        <td className="scale-75 sm:scale-90 h-56 sm:h-72 pr-3 md:scale-100 sm:px-5 sm:py-3 whitespace-nowrap">
             <div
                 className="h-full w-44 border-t-2 hover:font-medium border-slate-500 hover:border-orange-400 hover:bg-[#ece9e4] duration-500 py-5 hover:px-4 flex justify-start items-center flex-col"
                 ref={divRef}
@@ -61,23 +61,27 @@ const Day: NextPage<{ day: Moment; month: months }> = ({ day, month }) => {
 
                                 return (
                                     <>
-                                        <span className='text-sm font-bold underline underline-offset-2' key={diaryIndex}>
-                                            {diary.best_part}
-                                        </span>
+                                        <div key={diary._id}>
+                                            <span className='text-sm font-bold underline underline-offset-2' key={diaryIndex}>
+                                                {diary.best_part}
+                                            </span>
 
-                                        <br />
+                                            <br />
 
-                                        {diary.tags?.map((value, index) => {
-                                            return (
-                                                <>
-                                                    <span className='text-sm font-medium mx-1' key={index}>
-                                                        &bull; {value}
-                                                    </span>
+                                            {diary.tags?.map((value, index) => {
+                                                return (
+                                                    <>
+                                                        <div key={index}>
+                                                            <span className='text-sm font-medium mx-1'>
+                                                                &bull; {value}
+                                                            </span>
 
-                                                    <br />
-                                                </>
-                                            )
-                                        })}
+                                                            <br />
+                                                        </div>
+                                                    </>
+                                                )
+                                            })}
+                                        </div>
                                     </>
                                 )
                             }

@@ -17,8 +17,9 @@ const DiaryPage: NextPage<{ user: User; token: string; diary: Diary }> = ({ user
             <Header />
 
             <main className='h-full w-full mx-auto py-6 px-6 sm:px-10 lg:px-8 overflow-x-scroll'>
-                <div className='h-full w-ful flex justify-center items-center'>
-                    <h1 className='text-2xl font-semibold'>Hello {diary.body}</h1>
+                <div className='h-full w-ful flex justify-center items-center flex-col'>
+                    <h1 className='text-2xl font-semibold'>{diary.body}</h1>
+                    <h1 className='text-2xl font-semibold'>{new Date(diary.date).toISOString().split("T")[0]}</h1>
                 </div>
             </main>
 

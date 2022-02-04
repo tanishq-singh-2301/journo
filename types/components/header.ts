@@ -7,6 +7,7 @@ type Navigation = {
 type UserNavigation = {
     name: string;
     href: string;
+    bgColor?: string;
 }
 
 type Account = {

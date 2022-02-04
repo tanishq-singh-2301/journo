@@ -25,7 +25,7 @@ const Header: NextPage = () => {
     const userNavigation: Array<UserNavigation> = [
         { name: 'Your Profile', href: '#' },
         { name: 'Settings', href: '/settings' },
-        { name: 'Sign out', href: '#' },
+        { name: 'Sign out', href: '/logout', bgColor: 'bg-red-600' },
     ];
 
     const account: Account = {
@@ -127,17 +127,15 @@ const Header: NextPage = () => {
                                                                 key={item.name}
                                                             >
                                                                 <Menu.Item>
-                                                                    {({ active }) => (
-                                                                        <a
-                                                                            href={item.href}
-                                                                            className={classNames(
-                                                                                active ? 'bg-gray-100' : '',
-                                                                                'block px-4 py-2 text-sm text-gray-700'
-                                                                            )}
-                                                                        >
-                                                                            {item.name}
-                                                                        </a>
-                                                                    )}
+                                                                    <a
+                                                                        href={item.href}
+                                                                        className={classNames(
+                                                                            'block px-4 py-2 text-sm text-gray-700 font-medium',
+                                                                            item.bgColor ? `hover:${item.bgColor} hover:text-white` : 'hover:bg-slate-200'
+                                                                        )}
+                                                                    >
+                                                                        {item.name}
+                                                                    </a>
                                                                 </Menu.Item>
                                                             </Link>
                                                         ))}

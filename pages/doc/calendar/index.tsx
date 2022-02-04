@@ -9,6 +9,8 @@ import Week from '../../../components/calendar/week';
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { useDiarys } from '../../../context/diary-context';
 import DatePicker from "react-datepicker";
+import { NextApiRequestCookies } from 'next/dist/server/api-utils';
+import NProgress from 'nprogress';
 
 type Calendar = {
     days: Array<Moment>;
@@ -41,9 +43,13 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
         setCalendar(getCalendar(date.month, date.year));
         (async () => {
             if (!diarys) {
+                NProgress.start();
+
                 const { success, error } = await getDiarys(token, moment().set("month", date.month).set("year", date.year));
                 if (!success)
                     alert(error);
+
+                NProgress.done();
             }
         })();
     }, []);
@@ -51,9 +57,13 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
     useEffect(() => {
         setCalendar(getCalendar(date.month, date.year));
         (async () => {
+            NProgress.start();
+
             const { success, error } = await getDiarys(token, moment().set("month", date.month).set("year", date.year));
             if (!success)
                 alert(error);
+
+            NProgress.done();
         })();
     }, [date]);
 
@@ -98,7 +108,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                         </span>
                     </div>
 
-                    <div className='relative text-gray-800 w-2/6 sm:w-1/6 lg:w-1/6 flex justify-center items-center'>
+                    <div className='relative text-gray-800 w-2/6 sm:w-1/6 lg:w-1/6 flex justify-center items-center z-20'>
                         <span
                             className='absolute flex font-bold justify-center items-center md:border-b duration-200 border-gray-400 w-16 pb-2 cursor-pointer hover:text-slate-600'
                             onClick={() => {
@@ -141,7 +151,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                 <div className="-my-2 w-full overflow-x-auto sm:-mx-6 lg:-mx-8 no-scrollbar snap-both">
                     <div className="align-middle inline-block min-w-full h-full">
                         <table className="min-w-full h-full w-full">
-                            <thead className='h-20 sticky top-0 bg_paper_fiber_img'>
+                            <thead className='h-20 sticky top-0 z-10 bg_paper_fiber_img'>
                                 <tr>
                                     {
                                         ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"].map((value, index) => {
@@ -149,7 +159,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
                                                 <th
                                                     key={index}
                                                     scope="col"
-                                                    className=" px-6 align-top py-3 text-left text-base font-semibold text-gray-600 uppercase tracking-wider"
+                                                    className="scale-75 sm:scale-90 md:scale-100 pr-3 sm:px-6 align-top py-3 text-left text-base font-semibold underline underline-offset-2 text-gray-900 uppercase tracking-wider"
                                                 > {value} </th>
                                             )
                                         })
@@ -170,7 +180,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const { cookies } = req;
+    const { cookies }: { cookies: NextApiRequestCookies } = req;
     const token: string = cookies['authentication'];
 
     if (token !== undefined) { // check auth-token
