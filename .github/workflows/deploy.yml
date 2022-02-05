@@ -32,9 +32,11 @@ jobs:
 
       - name: hello
         env:
-          GITHUB_CONTEXT: ${{ toJson(github.event) }}
+          GITHUB_CONTEXT: ${{ toJson(github.event.pull_request) }}
+          GITHUB_CONTEXT_2: ${{ toJson(github.event.push) }}
         run: |
           echo "$GITHUB_CONTEXT"
+          echo "$GITHUB_CONTEXT_2"
 
   # frontend_unit_testing_a:
   #   needs: [nextjs]
