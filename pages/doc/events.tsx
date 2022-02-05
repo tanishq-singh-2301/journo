@@ -74,7 +74,7 @@ const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
             </section>
 
             <main className='h-max w-full mx-auto py-4 px-6 sm:px-10 lg:px-8'>
-                <div className='h-full w-full flex justify-center items-start flex-col sm:justify-start sm:flex-row sm:overflow-x-scroll no-scrollbar'>
+                <div className='h-full w-full flex justify-center items-start flex-col sm:justify-start sm:flex-row sm:overflow-x-scroll touchMoveAllowed no-scrollbar'>
                     {events && events.map((event, index) => <EventStack Event={event} key={index} />)}
                 </div>
 
