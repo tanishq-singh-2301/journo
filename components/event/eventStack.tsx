@@ -10,7 +10,8 @@ import ListStack from "./listStack";
 import ListUpdate from "../update/list";
 import { ListJoiSchema } from "../../types/models/task";
 
-const dots: Array<string> = ["⭕", "🟠", "🔴", "🟤", "🟣", "🔵", "🟢", "🟡"];
+const dots: Array<string> = ["border-red-600", "border-orange-500", "border-violet-500", "border-stone-700", "border-rose-400", "border-green-700", "border-yellow-500"];
+const classNames = (...classes: Array<string>): string => classes.filter(Boolean).join(' ');
 
 const EventStack: NextPage<{ Event: Event }> = ({ Event }) => {
     const { name, date } = Event;
@@ -54,11 +55,15 @@ const EventStack: NextPage<{ Event: Event }> = ({ Event }) => {
         <div className="w-full sm:max-w-sm sm:min-w-[384px] p-6 border border-[rgb(0 0 0 / 13%)] bg-[#f1f1f152] rounded-sm drop-shadow-sm mb-4 sm:mr-4">
             <div className="h-16 w-full mb-4 drop-shadow-md flex justify-center items-center flex-col px-6">
                 <div className="w-full h-1/2 flex justify-between items-center z-10">
-                    <p className="text-black text-lg font-semibold">{name} &ensp;
-                        <span className="text-sm">
-                            {dots[Math.floor(Math.random() * 8)]}
-                        </span>
-                    </p>
+                    <div className="flex justify-center items-center">
+                        <p className="text-black text-lg font-semibold">
+                            {name} &ensp;
+                        </p>
+                        <div className={classNames(
+                            "h-4 w-4 border-[3px] rounded-full ",
+                            dots[Math.floor(Math.random() * dots.length)]
+                        )}></div>
+                    </div>
                     <DropDownMenu name=":" options={optionsContainer} />
                 </div>
                 <div className="w-full h-1/2 flex justify-between items-center">
