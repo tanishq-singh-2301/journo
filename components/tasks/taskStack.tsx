@@ -25,7 +25,7 @@ const TaskStack: NextPage<{ lists: Array<List>; task: TaskTypes; }> = ({ lists, 
                 </div>
             </div>
 
-            {lists.length > 0 ? lists.map((list, index) => <ListStack list={list} key={index} />) : null}
+            {/* {lists.length > 0 ? lists.map((list, index) => <ListStack list={list} key={index} />) : null} */}
 
         </div>
     )

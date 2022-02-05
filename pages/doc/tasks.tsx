@@ -52,11 +52,10 @@ const Tasks: NextPage<{ user: User; token: string }> = ({ token, user }) => {
 
             <main className='h-max w-full mx-auto py-0 sm:py-4 px-6 sm:px-10 lg:px-8'>
                 <div className='h-full py-1 w-full flex snap-x snap-mandatory items-start justify-start flex-row overflow-x-scroll no-scrollbar'>
-                    {/* {task && <TaskStack lists={task.todo} task={TaskTypes.To_Do} />}
+                    {task && <TaskStack lists={task.todo} task={TaskTypes.To_Do} />}
                     {task && <TaskStack lists={task.inProgress} task={TaskTypes.In_Progress} />}
                     {task && <TaskStack lists={task.onHold} task={TaskTypes.On_Hold} />}
-                    {task && <TaskStack lists={task.done} task={TaskTypes.Done} />} */}
-                    {task && <h1>{task._id}</h1>}
+                    {task && <TaskStack lists={task.done} task={TaskTypes.Done} />}
                 </div>
             </main>
 
