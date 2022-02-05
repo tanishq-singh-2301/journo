@@ -35,7 +35,7 @@ jobs:
         #   GITHUB_CONTEXT: ${{ toJson(GITHUB_REF) }}
         #   GITHUB_CONTEXT_2: ${{ toJson(github.event.push) }}
         run: |
-          echo "$GITHUB_REF"
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         
         # echo "$GITHUB_CONTEXT_2"
 
