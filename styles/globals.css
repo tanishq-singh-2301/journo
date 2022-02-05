@@ -13,7 +13,6 @@ body {
   margin: 0;
   background-image: url('/paper_fibers.png');
   font-family: 'Montserrat';
-  /* min-height: -webkit-fill-available; */
   height: 100vh;
   height: var(--app-height);
   position: fixed;
@@ -21,7 +20,6 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  -webkit-overflow-scrolling:touch;
 }
 
 .bg_paper_fiber_img {
