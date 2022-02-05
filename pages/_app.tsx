@@ -28,6 +28,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (typeof window !== "undefined") {
     window.addEventListener('resize', appHeight);
     appHeight();
+
+    document.ontouchmove = (e) => {
+      e.preventDefault();
+    }
   }
 
   return (
