@@ -7,7 +7,7 @@ const classNames = (...classes: Array<string>): string => classes.filter(Boolean
 
 const TaskStack: NextPage<{ lists: Array<List>; task: TaskTypes; }> = ({ lists, task }) => {
     return (
-        <div className="max-h-[70vh] overflow-y-auto relative sm:max-w-sm custom-scrollbar min-w-[calc(100vw-48px)] snap-start sm:min-w-[384px] py-0 sm:my-6 mb-4 mr-4 justify-start flex flex-col" >
+        <div className="max-h-[82vh] px-5 sm:px-0 overflow-y-auto relative sm:max-w-sm custom-scrollbar min-w-[calc(100vw-48px)] snap-start sm:min-w-[384px] py-0 sm:my-6 mb-4 mr-4 justify-start flex flex-col" >
 
             <div className="sticky top-0 bg_paper_fiber_img h-fit py-6 w-full sm:px-10 mb-4 flex justify-center items-center flex-col">
                 <div className="h-full w-full flex justify-center items-center flex-col border-b-2 border-gray-700">

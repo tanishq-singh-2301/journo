@@ -16,7 +16,6 @@ type Calendar = {
     days: Array<Moment>;
 }
 
-const monthsArr: Array<string> = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 enum months { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
 
 const getCalendar = (months: months, year: number): Array<Calendar> => {
@@ -81,7 +80,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
 
                     <div className='flex justify-start w-2/6 sm:w-3/6 lg:w-3/6 items-center flex-row'>
                         <span className='text-2xl sm:text-4xl font-bold md:mr-9'>
-                            {monthsArr[date.month]}
+                            {months[date.month]}
                             <i className='mr-2'>{"'"}</i>
                             {date.year}
                         </span>

@@ -19,8 +19,7 @@ const ListStack: NextPage<{ list: List }> = ({ list }) => {
             >
                 <div
                     className={classNames(
-                        "w-full pb-4 hover:bg-[#ece9e4] hover:border-t-orange-400 hover:border-b-transparent cursor-pointer border-y-2 border-t-transparent border-b-slate-300 duration-300",
-                        hover ? "p-5 pb-5" : ""
+                        "w-full pb-4 hover:bg-[#ece9e4] hover:border-t-orange-400 hover:border-b-transparent cursor-pointer border-y-2 border-t-transparent border-b-slate-300 duration-300 hover:p-5 hover:pb-5"
                     )}
                 >
                     <div className="max-h-10 w-full flex justify-between items-center">
