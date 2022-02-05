@@ -147,7 +147,7 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
 
             <main className='h-full w-full mx-auto py-6 px-6 sm:px-10 lg:px-8 flex justify-center items-center flex-col'>
 
-                <div className="max-h-[80vh] overflow-y-auto -my-2 w-full overflow-x-auto sm:-mx-6 lg:-mx-8 no-scrollbar snap-both">
+                <div className="max-h-[80vh] touchMoveAllowed overflow-y-auto -my-2 w-full overflow-x-auto sm:-mx-6 lg:-mx-8 no-scrollbar snap-both">
                     <div className="align-middle inline-block min-w-full h-full">
                         <table className="min-w-full h-full w-full relative">
                             <thead className='h-20 sticky right-0 z-10'>
