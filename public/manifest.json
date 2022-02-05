@@ -1,0 +1,21 @@
+{
+    "name": "Journo Diary",
+    "short_name": "Journo",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "/journo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/journo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
