@@ -2,7 +2,8 @@ import { NextPage } from "next";
 import { TaskTypes, List } from "../../types/models/task";
 import ListStack from "./listStack";
 
-const dots: Array<string> = ["⭕", "🟠", "🔴", "🟤", "🟣", "🔵", "🟢", "🟡"];
+const dots: Array<string> = ["border-red-600", "border-orange-500", "border-violet-500", "border-stone-700", "border-rose-400", "border-green-700", "border-yellow-500"];
+const classNames = (...classes: Array<string>): string => classes.filter(Boolean).join(' ');
 
 const TaskStack: NextPage<{ lists: Array<List>; task: TaskTypes; }> = ({ lists, task }) => {
     return (
@@ -14,9 +15,10 @@ const TaskStack: NextPage<{ lists: Array<List>; task: TaskTypes; }> = ({ lists, 
                         <p className="text-black text-lg font-bold">
                             {/* {TaskTypes[task].replaceAll('_', ' ')} &ensp; */}
 
-                            <span className="text-sm">
-                                {dots[Math.floor(Math.random() * 8)]}
-                            </span>
+                            <div className={classNames(
+                                "h-4 w-4 border-[3px] rounded-full ",
+                                dots[Math.floor(Math.random() * dots.length)]
+                            )}></div>
                         </p>
                     </div>
                     <div className="w-full h-1/2 flex justify-between items-center py-px">
