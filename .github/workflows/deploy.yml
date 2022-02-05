@@ -31,12 +31,13 @@ jobs:
       #   run: npm run build
 
       - name: hello
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github.event.pull_request) }}
-          GITHUB_CONTEXT_2: ${{ toJson(github.event.push) }}
+        # env:
+        #   GITHUB_CONTEXT: ${{ toJson(GITHUB_REF) }}
+        #   GITHUB_CONTEXT_2: ${{ toJson(github.event.push) }}
         run: |
-          echo "$GITHUB_CONTEXT"
-          echo "$GITHUB_CONTEXT_2"
+          echo "$GITHUB_REF"
+        
+        # echo "$GITHUB_CONTEXT_2"
 
   # frontend_unit_testing_a:
   #   needs: [nextjs]
