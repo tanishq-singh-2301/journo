@@ -28,28 +28,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   if (typeof window !== "undefined") {
     window.addEventListener('resize', appHeight);
     appHeight();
-
-    // document.ontouchmove = (e) => {
-    //   e.preventDefault();
-    // }
-
-    document.ontouchmove = (event: any) => {
-      var isTouchMoveAllowed = false;
-      var p = event.target;
-
-      while (p != null) {
-        if (p.classList && p.classList.contains("touchMoveAllowed")) {
-          isTouchMoveAllowed = true;
-          break;
-        }
-        p = p.parentNode;
-      }
-
-      if (!isTouchMoveAllowed) {
-        event.preventDefault();
-      }
-
-    };
   }
 
   return (

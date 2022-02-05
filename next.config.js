@@ -9,7 +9,7 @@ const nextConfig = {
 module.exports = withPWA({
   pwa: {
     dest: 'public',
-    sw: 'service-worker.js',
+    sw: 'service-worker.js'
   },
   ...nextConfig
 });

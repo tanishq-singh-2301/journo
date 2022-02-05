@@ -4,14 +4,17 @@ import { User } from '../../types/verifyToken';
 import Header from '../../components/common/header';
 import { verifyToken } from '../../utils/verifyToken';
 import { NextApiRequestCookies } from 'next/dist/server/api-utils';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTask } from '../../context/task-context';
 import TaskStack from '../../components/tasks/taskStack';
 import nProgress from 'nprogress';
 import { TaskTypes } from '../../types/models/task';
+import { enableBodyScroll, disableBodyScroll } from 'body-scroll-lock';
 
 const Tasks: NextPage<{ user: User; token: string }> = ({ token, user }) => {
     const { task, getTask } = useTask();
+    const scrollElement = useRef<HTMLDivElement>(null);
+    const nonScrollElement = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!task) {
@@ -26,10 +29,21 @@ const Tasks: NextPage<{ user: User; token: string }> = ({ token, user }) => {
                 nProgress.done();
             })()
         }
-    }, [])
+    }, []);
+
+    if (scrollElement.current) {
+        enableBodyScroll(scrollElement.current)
+    }
+
+    if (nonScrollElement.current) {
+        disableBodyScroll(nonScrollElement.current)
+    }
 
     return (
-        <div className='h-full max-w-screen flex justify-start items-center flex-col'>
+        <div
+            className='h-full max-w-screen flex justify-start items-center flex-col'
+            ref={nonScrollElement}
+        >
             <Head>
                 <title>Journo | Tasks</title>
                 <link rel="icon" href="/journo.png" />
@@ -51,7 +65,10 @@ const Tasks: NextPage<{ user: User; token: string }> = ({ token, user }) => {
             </section >
 
             <main className='h-max w-full mx-auto py-0 sm:py-4 px-6 sm:px-10 lg:px-8'>
-                <div className='h-full py-1 w-full flex snap-x snap-mandatory items-start touchMoveAllowed justify-start flex-row overflow-x-scroll no-scrollbar'>
+                <div
+                    className='h-full py-1 w-full flex snap-x snap-mandatory items-start justify-start flex-row overflow-x-scroll no-scrollbar'
+                    ref={scrollElement}
+                >
                     {task && <TaskStack lists={task.todo} task={TaskTypes.To_Do} />}
                     {task && <TaskStack lists={task.inProgress} task={TaskTypes.In_Progress} />}
                     {task && <TaskStack lists={task.onHold} task={TaskTypes.On_Hold} />}

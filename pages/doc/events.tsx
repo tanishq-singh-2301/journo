@@ -3,14 +3,18 @@ import Head from 'next/head';
 import type { User } from '../../types/verifyToken';
 import { verifyToken } from '../../utils/verifyToken';
 import { useEvents } from '../../context/event-context';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Header from '../../components/common/header';
 import EventStack from '../../components/event/eventStack';
 import EventUpdate from '../../components/update/event';
 import nProgress from 'nprogress';
+import { enableBodyScroll, disableBodyScroll } from 'body-scroll-lock';
 
 const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
     const { events, getEvents, setEvent } = useEvents();
+    const scrollElement = useRef<HTMLDivElement>(null);
+    const nonScrollElement = useRef<HTMLDivElement>(null);
+
     const [editEvent, setEditEvent] = useState<{ state: boolean; todo: Function }>({ state: false, todo: () => { } });
 
     useEffect(() => {
@@ -27,8 +31,19 @@ const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
         })();
     }, []);
 
+    if (scrollElement.current) {
+        enableBodyScroll(scrollElement.current)
+    }
+
+    if (nonScrollElement.current) {
+        disableBodyScroll(nonScrollElement.current)
+    }
+
     return (
-        <div className='h-full max-w-screen flex justify-start items-center flex-col'>
+        <div
+            className='h-full max-w-screen flex justify-start items-center flex-col'
+            ref={nonScrollElement}
+        >
 
             <Head>
                 <title>Journo | Events</title>
@@ -74,7 +89,10 @@ const Events: NextPage<{ user: User; token: string }> = ({ user, token }) => {
             </section>
 
             <main className='h-max w-full mx-auto py-4 px-6 sm:px-10 lg:px-8'>
-                <div className='h-full w-full flex justify-center items-start flex-col sm:justify-start sm:flex-row sm:overflow-x-scroll touchMoveAllowed no-scrollbar'>
+                <div
+                    className='h-full w-full flex justify-center items-start flex-col sm:justify-start sm:flex-row sm:overflow-x-scroll no-scrollbar'
+                    ref={scrollElement}
+                >
                     {events && events.map((event, index) => <EventStack Event={event} key={index} />)}
                 </div>
 
