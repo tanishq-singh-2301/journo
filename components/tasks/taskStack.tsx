@@ -21,7 +21,7 @@ const TaskStack: NextPage<{ lists: Array<List>; task: TaskTypes; }> = ({ lists, 
                     </div>
                     <div className="w-full h-1/2 flex justify-between items-center py-px">
                         <h1 className="text-gray-500 text-sm font-medium">
-                            {/* {lists.length} Tasks */}
+                            {lists.length} Tasks
                         </h1>
                     </div>
                 </div>
