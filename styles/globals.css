@@ -16,6 +16,11 @@ body {
   /* min-height: -webkit-fill-available; */
   height: 100vh;
   height: var(--app-height);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .bg_paper_fiber_img {

@@ -4,14 +4,13 @@ import Header from '../../../components/common/header';
 import { User } from '../../../types/verifyToken';
 import { verifyToken } from '../../../utils/verifyToken';
 import moment, { Moment } from 'moment';
-import { HTMLAttributes, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Week from '../../../components/calendar/week';
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { useDiarys } from '../../../context/diary-context';
 import DatePicker from "react-datepicker";
 import { NextApiRequestCookies } from 'next/dist/server/api-utils';
 import nProgress from 'nprogress';
-import { enableBodyScroll, disableBodyScroll } from 'body-scroll-lock';
 
 type Calendar = {
     days: Array<Moment>;
@@ -38,8 +37,6 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
     const [date, setDate] = useState<{ month: months; year: number }>({ month: today.month(), year: today.year() });
     const [calendar, setCalendar] = useState<Array<Calendar> | null>(null);
     const dateInputElement = useRef<DatePicker<never, undefined> | null>(null);
-    const scrollElement = useRef<HTMLTableElement>(null);
-    const nonScrollElement = useRef<HTMLDivElement>(null);
     const { getDiarys, diarys } = useDiarys();
 
     useEffect(() => {
@@ -70,19 +67,8 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
         })();
     }, [date]);
 
-    if (scrollElement.current) {
-        enableBodyScroll(scrollElement.current)
-    }
-
-    if (nonScrollElement.current) {
-        disableBodyScroll(nonScrollElement.current)
-    }
-
     return (
-        <div
-            className='h-full max-w-screen flex justify-start items-center flex-col'
-            ref={nonScrollElement}
-        >
+        <div className='h-full max-w-screen flex justify-start items-center flex-col'>
             <Head>
                 <title>Journo | Calendar</title>
                 <link rel="icon" href="/journo.png" />
@@ -162,12 +148,9 @@ const Calendar: NextPage<{ user: User; token: string; }> = ({ token, user }) => 
 
             <main className='h-full w-full mx-auto py-6 px-6 sm:px-10 lg:px-8 flex justify-center items-center flex-col'>
 
-                <div className="-my-2 w-full overflow-x-auto sm:-mx-6 lg:-mx-8 no-scrollbar snap-both">
+                <div className="max-h-[80vh] overflow-y-auto -my-2 w-full overflow-x-auto sm:-mx-6 lg:-mx-8 no-scrollbar snap-both">
                     <div className="align-middle inline-block min-w-full h-full">
-                        <table
-                            className="min-w-full h-full w-full relative"
-                            ref={scrollElement}
-                        >
+                        <table className="min-w-full h-full w-full relative">
                             <thead className='h-20 sticky right-0 z-10'>
                                 <tr>
                                     {
