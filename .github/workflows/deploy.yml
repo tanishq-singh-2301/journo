@@ -24,14 +24,14 @@ jobs:
         with:
           node-version: '14.x'
       
-      - name: Installing Packages
-        run: npm install
+      # - name: Installing Packages
+      #   run: npm install
 
-      - name: Building Application
-        run: npm run build
+      # - name: Building Application
+      #   run: npm run build
 
       - name:
-        run: echo ${{ github.event }}
+        run: echo ${{ toJson(github) }}
 
   # frontend_unit_testing_a:
   #   needs: [nextjs]
