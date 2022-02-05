@@ -30,10 +30,11 @@ jobs:
       # - name: Building Application
       #   run: npm run build
 
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: |
-        echo "$GITHUB_CONTEXT"
+      - name: hello
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
 
   # frontend_unit_testing_a:
   #   needs: [nextjs]
