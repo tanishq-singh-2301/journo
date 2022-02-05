@@ -31,13 +31,10 @@ jobs:
       #   run: npm run build
 
       - name: hello
-        # env:
-        #   GITHUB_CONTEXT: ${{ toJson(GITHUB_REF) }}
-        #   GITHUB_CONTEXT_2: ${{ toJson(github.event.push) }}
+        env:
+          GITHUB_CONTEXT_2: ${{ toJson(GITHUB_REF) }}
         run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        
-        # echo "$GITHUB_CONTEXT_2"
+          echo "$GITHUB_CONTEXT_2"
 
   # frontend_unit_testing_a:
   #   needs: [nextjs]
