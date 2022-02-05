@@ -25,10 +25,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
         case "GET":
             try {
                 await connectToDB();
-                await TASK.findOne({ user: user!._id })
-                    .then(async (result: Task) => {
+                await TASK.find({ user: user!._id })
+                    .then(async (result: Array<Task>) => {
                         await UpdateLastUse(ip, user!._id);
-                        return res.status(200).json({ success: true, data: result });
+                        return res.status(200).json({ success: true, data: result[0] });
                     }).catch((error) => res.status(200).json({ success: false, error: error.message.replace(/\"/g, "") }));
 
             } catch (error) {
